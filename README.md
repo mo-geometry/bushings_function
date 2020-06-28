@@ -1,6 +1,6 @@
 # Surfaces of revolution from Bushing's function
 
-***Python scripts to animate a pair of 3D surfaces of revolution, and calculate their first and second derivatives.
+* Python scripts to animate a pair of 3D surfaces of revolution, and calculate their first and second derivatives.
 
 <center>
 <img src="https://user-images.githubusercontent.com/62537514/85952592-57d91700-b962-11ea-831d-745cc6264454.png" width="linewidth"/>
