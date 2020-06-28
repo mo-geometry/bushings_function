@@ -9,8 +9,7 @@
 
 # About
 
-Bushing's function is derived from the coherent
-states of the anisotropic harmonic oscillator.
+Bushing's function is derived from the coherent states of the anisotropic harmonic oscillator.
 
 <center>
 <img src="https://user-images.githubusercontent.com/62537514/85952459-5f4bf080-b961-11ea-83d7-054e922ebb40.png" width="linewidth"/>
@@ -18,7 +17,7 @@ states of the anisotropic harmonic oscillator.
 
 γ(a, x) and Γ(a) are the lower incomplete gamma function, and gamma function respectively [(see wolfram)](https://mathworld.wolfram.com/IncompleteGammaFunction.html).
 
-θ ranges from 0 to 2π in Bushing's function, and from 0 to π for the surface of revolution.
+θ ranges from 0 to 2π in bushing's function, and from 0 to π for the surface of revolution.
 
 The functions α(θ) and β(θ) are given by either 
 ```
