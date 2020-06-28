@@ -18,7 +18,7 @@ states of the anisotropic harmonic oscillator.
 
 γ(a, x) and Γ(a) are the lower incomplete gamma function, and gamma function respectively [(see wolfram)](https://mathworld.wolfram.com/IncompleteGammaFunction.html).
 
-θ is the polar angle ranging from 0 to 2π.
+θ ranges from 0 to 2π in Bushing's function, and from 0 to π for the surface of revolution.
 
 The functions α(θ) and β(θ) are given by either 
 ```
