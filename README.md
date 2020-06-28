@@ -36,7 +36,7 @@ Note: The surface of revolution and its derivatives are wholly described by the 
 nF (int): occupancy parameter
 ```
 
-For chosen values of (λ,nF) the scripts animate bushing's surfaces for a range of η values.
+For chosen values of (λ,nF) bushing's surfaces are animated for a range of η values.
 
 
 
