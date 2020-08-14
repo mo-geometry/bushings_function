@@ -7,7 +7,7 @@
 </center>
 
 
-# About
+### About
 
 Bushing's function is derived from the coherent states of the anisotropic harmonic oscillator.
 
