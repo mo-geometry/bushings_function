@@ -7,7 +7,7 @@
 #
 # 1)
 # Inhibition of spontaneous emission in Fermi gases
-# Busch et al, Euro-phys. Letters 44, 1 (1998).
+# Busch et al., Euro-phys. Letters 44, 1 (1998).
 # DOI: https://doi.org/10.1209/epl/i1998-00426-2
 # 2)
 # Spontaneous Emission in ultra-cold spin-polarised
@@ -17,60 +17,83 @@
 # arXiv: 0810.0231
 # 3)
 # Spatial and energetic mode dynamics of cold
-# atomic systems, O'Sullivan.
+# atomic systems, PhD Thesis [2012] Brian O'Sullivan.
 # - see chapter 2.3 for a full derivation of
 # equation (2.112)
 # URL: https://cora.ucc.ie/handle/10468/963
 
 # MEDITATIONS ON GEOMETRY ##############################################################################################
-
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import animation
-import random
+import glob
+import cv2
 import sys
-from plotFunctions import *
-from bushingsFunction import *
+import argparse
+from modules.bushings_function import *
+from modules.plot_bushings import *
 
-# PREAMBLE #############################################################################################################
-
-config = {"cmap1": randomColormap(choice=True, colorcode=False, intense=False),
-          "cmap2": randomColormap(choice=False, colorcode=True, intense=False),
-          "η": 5.0,                     # spread: float point value
-          "λ": 11,                      # anisotropy: positive integer excluding 0
-          "nF": 23,                     # occupancy: positive integer including 0
-          "frames": 2 ** 6,             # number of frames for image (approx 96 is max depending on memory)
-          "animation": False            # if False display a single image
-          }
+# ARGUMENTS ############################################################################################################
+parser = argparse.ArgumentParser(description='Bushings Function')
+# surface options & intial state
+parser.add_argument('--frames', default=2 ** 6)
+parser.add_argument('--fps', default=10)
+parser.add_argument('--animation', default=True)
+parser.add_argument('--save_frames_for_avi', default=True)
+parser.add_argument('--delete_figures', default=True)
+parser.add_argument('--figure_width_height', default=(9, 8))
+parser.add_argument('--figures_folder', default="figures")
+args = parser.parse_args()
 
 # MAIN #################################################################################################################
 
-# load the surfaces
-cigar = [Surface(config, cigar=True)]
-pancake = [Surface(config, pancake=True)]
-
-# append data for the animation
-if config["animation"]:
-    for idx in range(config["frames"]):
-        θidx = idx/config["frames"] * 2 * np.pi
-        config["η"] = 5 + 4 * np.sin(θidx) + 3 * np.sin(θidx/2) ** 2
-        cigar.append(Surface(config, cigar=True))
-        pancake.append(Surface(config, pancake=True))
-        drawProgressBar(idx/config["frames"], barLen=50)
-    sys.stdout.write('\r')   # remove progress bar
-
 # initialize figure
-fig, sub1, sub2, sub3, sub4 = initialize_figure(config, cigar, pancake)
+fig = FIGURE(BUSHINGS())
+fig.plot(args)
+plt.show()
 
-# animate the figure
-if config["animation"]:
-    # animate the figure
-    anim = animation.FuncAnimation(fig, update_figure,
-                                   frames=config["frames"], repeat=False, interval=1,
-                                   fargs=(fig, cigar, pancake, sub1, sub2, sub3, sub4, config))
-    # anim.save('bushings.gif', dpi=80, writer='imagemagick')
-    # anim.save("frames0/bushings.png", writer="imagemagick")
+# animation
+if args.animation:
+    A = np.linspace(0, 2 * np.pi, args.frames)
+    η = 5 + 4 * np.sin(A) + 3 * np.sin(A / 2) ** 2
+    sys.stdout.write("Generating images:\n")
+    for idx in range(args.frames):
+        # update figure
+        fig.update(BUSHINGS(η=η[idx]))
+        # update progress bar
+        drawProgressBar((idx + 1) / args.frames, barLen=50)
+    # remove progress bar
+    sys.stdout.write('\r')
+    sys.stdout.write(" *** done *** \n")
+
+# VID ##################################################################################################################
+
+if np.logical_and(args.animation, args.save_frames_for_avi) is False:
+    raise SystemExit
+# else write video
+sys.stdout.write("Writing video:\n")
+
+# load images
+image_folder = os.path.join(os.getcwd(), args.figures_folder)
+images = sorted(glob.glob(os.path.join(image_folder, "*.png")))
+
+# setting the frame (height, width) according to the (height, width) of first image
+height, width, layers = cv2.imread(os.path.join(image_folder, images[0])).shape
+fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+video = cv2.VideoWriter("bushings.avi", fourcc, args.fps, (width, height))
+
+# Appending the images to the video one by one
+for image, idx in zip(images, range(len(images))):
+    video.write(cv2.imread(os.path.join(image_folder, image)))
+    # update progress bar
+    drawProgressBar((idx + 1) / len(images), barLen=50)
+sys.stdout.write('\r')      # remove progress bar
+
+# Deallocating memories taken for window creation
+cv2.destroyAllWindows()
+video.release()  # releasing the video generated
+# delete image folder
+if args.delete_figures:
+    shutil.rmtree(image_folder)
+# delete __pycache__ folder
+shutil.rmtree(os.path.join(os.getcwd(), "modules", "__pycache__"))
+sys.stdout.write(" *** done *** \n")
 
 # FIN ##################################################################################################################
-
-plt.show()
