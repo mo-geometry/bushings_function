@@ -51,7 +51,7 @@ class BUSHINGS:
               d2βdθ2 = - 2 * η ** 2 * np.cos(2 * θ)
           variables = {"α": α, "β": β, "dα": dαdθ, "dβ": dβdθ, "d2α": d2αdθ2, "d2β": d2βdθ2}
           # Evaluate the upper incomplete gamma function portion of Bushings function
-          G, dG, d2G = self.upper_incomplete_bushings(variables, λ, nF, derivatives=derivatives)
+          G, dG, d2G = self.bushings_incomplete_gamma_function(variables, λ, nF, derivatives=derivatives)
           r = gammainc(nF + 1, β) + np.exp(-β) * G
           if derivatives:
               nFac = factorial(nF)
@@ -69,7 +69,7 @@ class BUSHINGS:
 
 
   @staticmethod
-  def upper_incomplete_bushings(variables, λ, nF, G=0.0, dG=0.0, d2G=0.0, derivatives=False):
+  def bushings_incomplete_gamma_function(variables, λ, nF, G=0.0, dG=0.0, d2G=0.0, derivatives=False):
       α, β = variables["α"], variables["β"]
       dα, dβ = variables["dα"], variables["dβ"]
       d2α, d2β = variables["d2α"], variables["d2β"]
