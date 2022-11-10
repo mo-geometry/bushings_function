@@ -23,6 +23,7 @@
 # URL: https://cora.ucc.ie/handle/10468/963
 
 # MEDITATIONS ON GEOMETRY ##############################################################################################
+import cv2
 import sys
 import argparse
 from modules.bushings_function import *
