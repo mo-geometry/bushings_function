@@ -3,8 +3,6 @@ from matplotlib.tri import Triangulation
 import scipy.special as sc
 from scipy.special import gamma, gammainc, gammaincc, factorial
 
-
-
 # OBJECTS ##############################################################################################################
 
 class BUSHINGS:

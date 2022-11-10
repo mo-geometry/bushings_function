@@ -35,9 +35,8 @@ parser = argparse.ArgumentParser(description='Bushings Function')
 # surface options & intial state
 parser.add_argument('--frames', default=2 ** 6)
 parser.add_argument('--fps', default=10)
-parser.add_argument('--animation', default=True)
 parser.add_argument('--save_frames_for_avi', default=True)
-parser.add_argument('--delete_figures', default=True)
+parser.add_argument('--delete_avi_figures', default=True)
 parser.add_argument('--figure_width_height', default=(9, 8))
 parser.add_argument('--figures_folder', default="figures")
 args = parser.parse_args()
@@ -45,12 +44,13 @@ args = parser.parse_args()
 # MAIN #################################################################################################################
 
 # initialize figure
-fig = FIGURE(BUSHINGS())
+thats_a_fine_bush = BUSHINGS()
+fig = FIGURE(thats_a_fine_bush)
 fig.plot(args)
 plt.show()
 
 # animation
-if args.animation:
+if args.save_frames_for_avi:
     A = np.linspace(0, 2 * np.pi, args.frames)
     η = 5 + 4 * np.sin(A) + 3 * np.sin(A / 2) ** 2
     sys.stdout.write("Generating images:\n")
@@ -62,12 +62,15 @@ if args.animation:
     # remove progress bar
     sys.stdout.write('\r')
     sys.stdout.write(" *** done *** \n")
+else:
+    # delete __pycache__ folder
+    shutil.rmtree(os.path.join(os.getcwd(), "modules", "__pycache__"))
+    sys.stdout.write(" *** done *** \n")
+    raise SystemExit
 
 # VID ##################################################################################################################
 
-if np.logical_and(args.animation, args.save_frames_for_avi) is False:
-    raise SystemExit
-# else write video
+# Write video
 sys.stdout.write("Writing video:\n")
 
 # load images
@@ -90,7 +93,7 @@ sys.stdout.write('\r')      # remove progress bar
 cv2.destroyAllWindows()
 video.release()  # releasing the video generated
 # delete image folder
-if args.delete_figures:
+if args.delete_avi_figures:
     shutil.rmtree(image_folder)
 # delete __pycache__ folder
 shutil.rmtree(os.path.join(os.getcwd(), "modules", "__pycache__"))
