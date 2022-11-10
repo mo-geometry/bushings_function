@@ -41,7 +41,7 @@ class FIGURE:
   def update(self, bushings):
       sub1, sub2, sub3, sub4 = self.subplots[0], self.subplots[1], self.subplots[2], self.subplots[3]
       # Textboxes
-      η, λ, nF = self.bushings.settings["η"], self.bushings.settings["λ"], self.bushings.settings["nF"]
+      η, λ, nF = bushings.settings["η"], bushings.settings["λ"], bushings.settings["nF"]
       textbox_cigar, textbox_pancake = self.return_textbox(η, λ, nF)
       # profile in the 2D plane [cigar]
       pancake_2D_plane_dict = bushings.plane["pancake"]
