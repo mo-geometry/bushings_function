@@ -55,19 +55,21 @@ class FIGURE:
       scale = np.min((1.0987 * np.max(r0), 1.0))
       # PLOTTING
       # subplot 1
-      sub1[1].plot_trisurf(pancake_xyz[0], pancake_xyz[1], pancake_xyz[2], triangles=pancake_tri,
-                            cmap=self.cmap_pancake, linewidths=0.1, alpha=0.88, edgecolor='Gray')
-      sub1[0].set_text(textbox_pancake)
-      sub1[1].set_xlim(-scale, scale)
-      sub1[1].set_ylim(-scale, scale)
-      sub1[1].set_zlim(-scale, scale)
+      sub1[0].remove()
+      sub1[0] = sub1[-1].plot_trisurf(pancake_xyz[0], pancake_xyz[1], pancake_xyz[2], triangles=pancake_tri,
+                                      cmap=self.cmap_pancake, linewidths=0.1, alpha=0.88, edgecolor='Gray')
+      sub1[1].set_text(textbox_pancake)
+      sub1[-1].set_xlim(-scale, scale)
+      sub1[-1].set_ylim(-scale, scale)
+      sub1[-1].set_zlim(-scale, scale)
       # subplot 2
-      sub2[1].plot_trisurf(cigar_xyz[0], cigar_xyz[1], cigar_xyz[2], triangles=cigar_tri,
-                            cmap=self.cmap_cigar, linewidths=0.1, alpha=0.88, edgecolor='Gray')
-      sub2[0].set_text(textbox_cigar)
-      sub2[1].set_xlim(-scale, scale)
-      sub2[1].set_ylim(-scale, scale)
-      sub2[1].set_zlim(-scale, scale)
+      sub2[0].remove()
+      sub2[0] = sub2[-1].plot_trisurf(cigar_xyz[0], cigar_xyz[1], cigar_xyz[2], triangles=cigar_tri,
+                                      cmap=self.cmap_cigar, linewidths=0.1, alpha=0.88, edgecolor='Gray')
+      sub2[1].set_text(textbox_cigar)
+      sub2[-1].set_xlim(-scale, scale)
+      sub2[-1].set_ylim(-scale, scale)
+      sub2[-1].set_zlim(-scale, scale)
       # subplot 3
       sub3[0].set_ydata(r0)
       sub3[1].set_rmax(scale)
@@ -108,19 +110,19 @@ class FIGURE:
       ax4 = plt.subplot(2, 2, 4)
       ###########
       # surface 1
-      ax1.plot_trisurf(pancake_xyz[0], pancake_xyz[1], pancake_xyz[2], triangles=pancake_tri,
-                       cmap=self.cmap_pancake, linewidths=0.1, alpha=0.88, edgecolor='Gray')
-      s1 = ax1.text2D(0.05, 0.05, textbox_pancake, bbox={'facecolor': 'w', 'alpha': 0.9, 'pad': 5},
+      s1a = ax1.plot_trisurf(pancake_xyz[0], pancake_xyz[1], pancake_xyz[2], triangles=pancake_tri,
+                             cmap=self.cmap_pancake, linewidths=0.1, alpha=0.88, edgecolor='Gray')
+      s1b = ax1.text2D(0.05, 0.05, textbox_pancake, bbox={'facecolor': 'w', 'alpha': 0.9, 'pad': 5},
                       transform=ax1.transAxes, ha="left")
       ax1.view_init(elev=14, azim=30)
-      sub1 = [s1, ax1]    # save to list for plot update
+      sub1 = [s1a, s1b, ax1]    # save to list for plot update
       # surface 2
-      ax2.plot_trisurf(cigar_xyz[0], cigar_xyz[1], cigar_xyz[2], triangles=cigar_tri,
-                       cmap=self.cmap_cigar, linewidths=0.1, alpha=0.88, edgecolor='Gray')
-      s2 = ax2.text2D(0.05, 0.05, textbox_cigar, bbox={'facecolor': 'w', 'alpha': 0.9, 'pad': 5},
+      s2a = ax2.plot_trisurf(cigar_xyz[0], cigar_xyz[1], cigar_xyz[2], triangles=cigar_tri,
+                            cmap=self.cmap_cigar, linewidths=0.1, alpha=0.88, edgecolor='Gray')
+      s2b = ax2.text2D(0.05, 0.05, textbox_cigar, bbox={'facecolor': 'w', 'alpha': 0.9, 'pad': 5},
                       transform=ax2.transAxes, ha="left")
       ax2.view_init(elev=14, azim=30)
-      sub2 = [s2, ax2]    # save to list for plot update
+      sub2 = [s2a, s2b, ax2]    # save to list for plot update
       ###########
       # surface 3
       s3, = ax3.plot(θ0, r0)
@@ -140,7 +142,7 @@ class FIGURE:
       ax3.set_xticklabels(['0', 'π/4', 'π/2', '3π/2', 'π', '5π/4', '6π/2', '7π/4'])
       ax3.grid(True)
       # SUBPLOT 4
-      ax4.set_title('scaled function, first+second derivatives')
+      ax4.set_title('surface derivatives')
       ax4.set_xlabel('            θ')
       ax4.set_ylabel(' ')
       ax4.set_xlim(0, 2 * np.pi)

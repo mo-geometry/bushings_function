@@ -23,8 +23,6 @@
 # URL: https://cora.ucc.ie/handle/10468/963
 
 # MEDITATIONS ON GEOMETRY ##############################################################################################
-import glob
-import cv2
 import sys
 import argparse
 from modules.bushings_function import *
@@ -34,7 +32,7 @@ from modules.plot_bushings import *
 parser = argparse.ArgumentParser(description='Bushings Function')
 # surface options & intial state
 parser.add_argument('--frames', default=2 ** 6)
-parser.add_argument('--fps', default=10)
+parser.add_argument('--fps', default=8)
 parser.add_argument('--save_frames_for_avi', default=True)
 parser.add_argument('--delete_avi_figures', default=True)
 parser.add_argument('--figure_width_height', default=(9, 8))
@@ -44,8 +42,7 @@ args = parser.parse_args()
 # MAIN #################################################################################################################
 
 # initialize figure
-thats_a_fine_bush = BUSHINGS()
-fig = FIGURE(thats_a_fine_bush)
+fig = FIGURE(BUSHINGS())
 fig.plot(args)
 plt.show()
 
