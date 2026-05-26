@@ -62,6 +62,9 @@ select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "RUF"]
 # RUF002/RUF003: Greek letters and math symbols (×, α, β, θ…) are intentional in physics code.
 ignore = ["RUF002", "RUF003"]
 
+[tool.ruff.lint.isort]
+known-first-party = ["bushings_function"]
+
 [tool.mypy]
 python_version = "3.11"
 strict = true
