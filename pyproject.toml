@@ -1,0 +1,77 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bushings-function"
+version = "0.1.0"
+description = "Surfaces of revolution from Bushing's function — coherent states of the anisotropic harmonic oscillator."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Brian O'Sullivan", email = "bmw.osullivan@gmail.com" }]
+keywords = [
+    "bushings-function",
+    "surfaces-of-revolution",
+    "harmonic-oscillator",
+    "incomplete-gamma",
+    "quantum-mechanics",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "PyOpenGL>=3.1.7",
+    "glfw>=2.7",
+    "imgui[glfw]>=2.0",
+    "matplotlib>=3.8",
+]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+]
+
+[project.urls]
+Homepage = "https://github.com/mo-geometry/bushings_function"
+Repository = "https://github.com/mo-geometry/bushings_function"
+
+# --- Tool configuration ---
+
+[tool.ruff]
+line-length = 99
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "RUF"]
+# RUF002/RUF003: Greek letters and math symbols (×, α, β, θ…) are intentional in physics code.
+ignore = ["RUF002", "RUF003"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "gpu: marks tests that require a GPU context",
+    "slow: marks tests that are slow to run",
+]
+addopts = "-m 'not gpu and not slow' --tb=short -q"

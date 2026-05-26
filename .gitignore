@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing / Coverage
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# mypy
+.mypy_cache/
+
+# ruff
+.ruff_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific
+figures/
+*.avi
+*.mp4
+
+# Upstream reference (cloned for porting)
+_upstream/
+
+# AI assistant instructions (not for public repos)
+CLAUDE.md
+
+# Dear ImGui persisted window layout
+imgui.ini
+
+# Exported mesh files (build artifacts)
+*.ply
+*.obj
